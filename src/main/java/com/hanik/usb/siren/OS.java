@@ -16,4 +16,8 @@ public class OS {
     public static boolean isLinux() {
         return System.getProperty ("os.name").startsWith("Linux");
     }
+
+    public static boolean isWindows() {
+        return System.getProperty ("os.name").startsWith("Windows");
+    }
 }

@@ -3,9 +3,9 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.examples;
+package com.hanik.usb.siren;
 
-import static com.hanik.usb.examples.PacketUtils.toHexString;
+import static com.hanik.usb.siren.PacketUtils.toHexString;
 
 public class SirenControlPacket {
     public static final byte  FF = (byte) 0xff;

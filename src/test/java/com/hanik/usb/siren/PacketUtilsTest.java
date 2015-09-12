@@ -3,7 +3,7 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.examples;
+package com.hanik.usb.siren;
 
 import org.junit.Assert;
 import org.junit.Test;

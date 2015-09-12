@@ -3,7 +3,7 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.examples;
+package com.hanik.usb.siren;
 
 public class SirenConstants {
     public static final byte USB_REPORTID_OUT_CONTROL = 1;

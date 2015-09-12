@@ -3,7 +3,7 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.examples;
+package com.hanik.usb.siren;
 
 /**
  * Created by fhanik on 9/11/15.

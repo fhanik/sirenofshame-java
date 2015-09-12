@@ -3,7 +3,7 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.examples;
+package com.hanik.usb.siren;
 
 
 import javax.usb.UsbConfiguration;
@@ -61,6 +61,9 @@ public class JavaxSiren {
     }
 
     public static void claimAndOpenSiren(UsbDevice siren) throws UsbException {
+        if (!OS.isLinux()) {
+            return;
+        }
         // Claim the interface
         UsbConfiguration configuration = siren.getUsbConfiguration((byte) 1);
         UsbInterface iface = configuration.getUsbInterface(SirenConstants.INTERFACE_NUMBER);
@@ -75,6 +78,9 @@ public class JavaxSiren {
     }
 
     public static void release(UsbDevice siren) throws UsbException {
+        if (!OS.isLinux()) {
+            return;
+        }
         // Claim the interface
         UsbConfiguration configuration = siren.getUsbConfiguration((byte) 1);
         UsbInterface iface = configuration.getUsbInterface(SirenConstants.INTERFACE_NUMBER);

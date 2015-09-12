@@ -19,3 +19,7 @@ Java Controller for the Siren of Shame - Uses usb4java
 ## How to Mac OS
 
  1. Run the examples `./gradlew -PmainClass=com.hanik.usb.siren.Examples execute`
+
+## How to Windows
+
+ 1. Run the examples `gradlew -PmainClass=com.hanik.usb.siren.Examples execute`

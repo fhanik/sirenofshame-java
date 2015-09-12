@@ -1,0 +1,1 @@
+SUBSYSTEM=="usb",ATTR{idVendor}=="16d0",ATTR{idProduct}=="0646",MODE="0660",GROUP="fhanik"

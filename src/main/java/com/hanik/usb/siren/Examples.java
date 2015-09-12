@@ -15,15 +15,15 @@ import java.util.Map;
 public class Examples {
     public static void main(String[] arg) throws UsbException, InterruptedException {
         Map<String,String> examplesBits = new HashMap<>();
-        examplesBits.put("lights.blink", "01ffff02fffffeffffffffffffffff0000000000000000000000000000000000000000000000");
-        examplesBits.put("lights.fade", "01ffff03fffffeffffffffffffffff0000000000000000000000000000000000000000000000");
-        examplesBits.put("lights.chase", "01ffff04fffffeffffffffffffffff0000000000000000000000000000000000000000000000");
-        examplesBits.put("lights.fade-chase", "01ffff05fffffeffffffffffffffff0000000000000000000000000000000000000000000000");
+        examplesBits.put("lights.blink",       "01ffff02fffffeffffffffffffffff0000000000000000000000000000000000000000000000");
+        examplesBits.put("lights.fade",        "01ffff03fffffeffffffffffffffff0000000000000000000000000000000000000000000000");
+        examplesBits.put("lights.chase",       "01ffff04fffffeffffffffffffffff0000000000000000000000000000000000000000000000");
+        examplesBits.put("lights.fade-chase",  "01ffff05fffffeffffffffffffffff0000000000000000000000000000000000000000000000");
         examplesBits.put("audio.sad-trombone", "01ff01fffeffffffffffffffffffff0000000000000000000000000000000000000000000000");
-        examplesBits.put("audio.ding", "01ff02fffeffffffffffffffffffff0000000000000000000000000000000000000000000000");
-        examplesBits.put("audio.plunk", "01ff03fffeffffffffffffffffffff0000000000000000000000000000000000000000000000");
-        examplesBits.put("stop.packet.1", "01ff00ff0000ffffffffffffffffff0000000000000000000000000000000000000000000000");
-        examplesBits.put("stop.packet.2",     "01ffff00ffff0000ffffffffffffff0000000000000000000000000000000000000000000000");
+        examplesBits.put("audio.ding",         "01ff02fffeffffffffffffffffffff0000000000000000000000000000000000000000000000");
+        examplesBits.put("audio.plunk",        "01ff03fffeffffffffffffffffffff0000000000000000000000000000000000000000000000");
+        examplesBits.put("stop.packet.1",      "01ff00ff0000ffffffffffffffffff0000000000000000000000000000000000000000000000");
+        examplesBits.put("stop.packet.2",      "01ffff00ffff0000ffffffffffffff0000000000000000000000000000000000000000000000");
         SirenControlPacket stop1 = PacketUtils.getControlPacket(PacketUtils.parseHexString(examplesBits.get("stop.packet.1")));
         SirenControlPacket stop2 = PacketUtils.getControlPacket(PacketUtils.parseHexString(examplesBits.get("stop.packet.2")));
         UsbHub hub = UsbHostManager.getUsbServices().getRootUsbHub();

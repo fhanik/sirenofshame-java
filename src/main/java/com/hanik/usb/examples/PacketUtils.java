@@ -1,51 +1,61 @@
 package com.hanik.usb.examples;
 
+import java.nio.ByteBuffer;
+
 /**
  * Created by fhanik on 9/11/15.
  */
 public class PacketUtils {
 
-    public static byte[] getControlPacket(SirenControlPacket packet) {
+    public static byte[] getControlMessage(SirenControlPacket packet) {
         byte[] message = new byte[38];
         int i = 0;
-        message[i++] = packet.reportId;
-        message[i++] = packet.controlByte1;
-        message[i++] = packet.audioMode;
-        message[i++] = packet.ledMode;
-        message[i++] = (byte)((packet.audioPlayDuration >> 8) & 0xff);
-        message[i++] = (byte)(packet.audioPlayDuration & 0xff);
-        message[i++] = (byte)((packet.ledPlayDuration >> 8) & 0xff);
-        message[i++] = (byte)(packet.ledPlayDuration & 0xff);
-        message[i++] = packet.readAudioIndex;
-        message[i++] = packet.readLedIndex;
-        message[i++] = packet.manualLeds0;
-        message[i++] = packet.manualLeds1;
-        message[i++] = packet.manualLeds2;
-        message[i++] = packet.manualLeds3;
-        message[i++] = packet.manualLeds4;
+        message[i++] = packet.getReportId();
+        message[i++] = packet.getControlByte1();
+        message[i++] = packet.getAudioMode();
+        message[i++] = packet.getLedMode();
+        message[i++] = (byte)((packet.getAudioPlayDuration()>> 8) & 0xff);
+        message[i++] = (byte)(packet.getAudioPlayDuration() & 0xff);
+        message[i++] = (byte)((packet.getLedPlayDuration() >> 8) & 0xff);
+        message[i++] = (byte)(packet.getLedPlayDuration() & 0xff);
+        message[i++] = packet.getReadAudioIndex();
+        message[i++] = packet.getReadLedIndex();
+        message[i++] = packet.getManualLeds0();
+        message[i++] = packet.getManualLeds1();
+        message[i++] = packet.getManualLeds2();
+        message[i++] = packet.getManualLeds3();
+        message[i++] = packet.getManualLeds4();
         return message;
     }
 
-    public static SirenControlPacket initControlPacket() {
-        final byte ff = (byte) 0xff;
-        final byte ffff = (short) 0xffff;
+    public static SirenControlPacket getControlPacket(byte[] message) {
+        if (message==null) {
+            throw new NullPointerException("Null message");
+        }
+        if (message.length<15) {
+            throw new IllegalArgumentException(String.format("Packet too short:%s", message.length));
+        }
         SirenControlPacket packet = new SirenControlPacket();
-        packet.reportId = 0;
-        packet.controlByte1 = ff;
-        packet.audioMode = ff;
-        packet.ledMode = ff;
-        packet.audioPlayDuration = ffff;
-        packet.ledPlayDuration = ffff;
-        packet.readAudioIndex = ff;
-        packet.readLedIndex = ff;
-        packet.manualLeds0 = ff;
-        packet.manualLeds1 = ff;
-        packet.manualLeds2 = ff;
-        packet.manualLeds3 = ff;
-        packet.manualLeds4 = ff;
+        int i=0;
+        packet.setReportId(message[i++]);
+        packet.setControlByte1(message[i++]);
+        packet.setAudioMode(message[i++]);
+        packet.setLedMode(message[i++]);
+        packet.setAudioPlayDuration((short)((message[i++] << 8 | message[i++] & 0xFF) & 0xFFFF));
+        packet.setLedPlayDuration((short)((message[i++] << 8 | message[i++] & 0xFF) & 0xFFFF));
+        packet.setReadAudioIndex(message[i++]);
+        packet.setReadLedIndex(message[i++]);
+        packet.setManualLeds0(message[i++]);
+        packet.setManualLeds1(message[i++]);
+        packet.setManualLeds2(message[i++]);
+        packet.setManualLeds3(message[i++]);
+        packet.setManualLeds4(message[i++]);
         return packet;
     }
 
+    public static String toDescriptiveString(byte[] message) {
+        return null;
+    }
     public static String toHexString(byte[] message) {
         StringBuffer buffer = new StringBuffer();
         for (byte b : message) {

@@ -56,18 +56,20 @@ public class JavaxSiren {
 
 
         SirenControlPacket packet = getBlinkingSiren();
-        sendMessage(siren, PacketUtils.getControlPacket(packet));
+        packet.setAudioMode(SirenConstants.AUDIO_MODE_INTERNAL_START);
+        sendMessage(siren, PacketUtils.getControlMessage(packet));
         Thread.sleep(5000);
-        packet.ledMode = SirenConstants.LED_MODE_OFF;
-        sendMessage(siren, PacketUtils.getControlPacket(packet));
+        packet.setLedMode(SirenConstants.LED_MODE_OFF);
+        packet.setAudioMode(SirenConstants.AUDIO_MODE_OFF);
+        sendMessage(siren, PacketUtils.getControlMessage(packet));
     }
 
 
     protected static SirenControlPacket getBlinkingSiren() {
-        SirenControlPacket packet = PacketUtils.initControlPacket();
-        packet.reportId = SirenConstants.USB_REPORTID_OUT_CONTROL;
-        packet.ledMode = SirenConstants.LED_MODE_INTERNAL_START;
-        packet.ledPlayDuration = SirenConstants.DURATION_FOREVER;
+        SirenControlPacket packet =new SirenControlPacket();
+        packet.setReportId(SirenConstants.USB_REPORTID_OUT_CONTROL);
+        packet.setLedMode(SirenConstants.LED_MODE_INTERNAL_START);
+        packet.setLedPlayDuration(SirenConstants.DURATION_FOREVER);
         return packet;
     }
 
@@ -82,9 +84,5 @@ public class JavaxSiren {
         System.out.println(PacketUtils.toHexString(message));
         device.syncSubmit(irp);
     }
-
-
-
-
 
 }

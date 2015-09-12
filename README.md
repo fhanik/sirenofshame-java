@@ -8,7 +8,7 @@ Java Controller for the Siren of Shame - Uses usb4java
 ## How to Linux
 
  1. Try the examples `./gradlew -PmainClass=com.hanik.usb.siren.Examples execute` if you get an Access Denied then
- 2. Open the file [99-sirenusb.rules](src/main/resources/99-sirenusb.urles)
+ 2. Open the file [99-sirenusb.rules](src/main/resources/99-sirenusb.rules)
  3. Put in your user group instead of fhanik
  4. Copy the file to /etc/udev/rules.d/
  5. Unplug the Siren

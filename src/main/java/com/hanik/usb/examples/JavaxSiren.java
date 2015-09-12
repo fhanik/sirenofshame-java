@@ -86,7 +86,7 @@ public class JavaxSiren {
             (short) 0
         );
         irp.setData(message);
-        System.out.println(PacketUtils.toHexString(message));
+        System.out.println((PacketUtils.getControlPacket(message).toString()));
         device.syncSubmit(irp);
     }
 

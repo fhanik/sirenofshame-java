@@ -5,6 +5,8 @@
 
 package com.hanik.usb.examples;
 
+import static com.hanik.usb.examples.PacketUtils.toHexString;
+
 public class SirenControlPacket {
     public static final byte  FF = (byte) 0xff;
     public static final short FFFF = (short) 0xffff;
@@ -202,20 +204,20 @@ public class SirenControlPacket {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("SirenControlPacket{");
-        sb.append("reportId=").append(reportId);
-        sb.append(", controlByte1=").append(controlByte1);
-        sb.append(", audioMode=").append(audioMode);
-        sb.append(", ledMode=").append(ledMode);
-        sb.append(", audioPlayDuration=").append(audioPlayDuration);
-        sb.append(", ledPlayDuration=").append(ledPlayDuration);
-        sb.append(", readAudioIndex=").append(readAudioIndex);
-        sb.append(", readLedIndex=").append(readLedIndex);
-        sb.append(", manualLeds0=").append(manualLeds0);
-        sb.append(", manualLeds1=").append(manualLeds1);
-        sb.append(", manualLeds2=").append(manualLeds2);
-        sb.append(", manualLeds3=").append(manualLeds3);
-        sb.append(", manualLeds4=").append(manualLeds4);
-        sb.append('}');
+        sb.append("\n\treportId         =").append(toHexString(getReportId()));
+        sb.append("\n\tcontrolByte1     =").append(toHexString(getControlByte1()));
+        sb.append("\n\taudioMode        =").append(toHexString(getAudioMode()));
+        sb.append("\n\tledMode          =").append(toHexString(getLedMode()));
+        sb.append("\n\taudioPlayDuration=").append(toHexString(getAudioPlayDuration()));
+        sb.append("\n\tledPlayDuration  =").append(toHexString(getLedPlayDuration()));
+        sb.append("\n\treadAudioIndex   =").append(toHexString(getReadAudioIndex()));
+        sb.append("\n\treadLedIndex     =").append(toHexString(getReadLedIndex()));
+        sb.append("\n\tmanualLeds0      =").append(toHexString(getManualLeds0()));
+        sb.append("\n\tmanualLeds1      =").append(toHexString(getManualLeds1()));
+        sb.append("\n\tmanualLeds2      =").append(toHexString(getManualLeds2()));
+        sb.append("\n\tmanualLeds3      =").append(toHexString(getManualLeds3()));
+        sb.append("\n\tmanualLeds4      =").append(toHexString(getManualLeds4()));
+        sb.append("\n}");
         return sb.toString();
     }
 }

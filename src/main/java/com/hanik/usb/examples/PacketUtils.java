@@ -5,7 +5,7 @@
 
 package com.hanik.usb.examples;
 
-import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 /**
  * Created by fhanik on 9/11/15.
@@ -58,23 +58,45 @@ public class PacketUtils {
         return packet;
     }
 
-    public static String toDescriptiveString(byte[] message) {
-        return null;
+    public static byte[] parseHexString(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
     }
+
     public static String toHexString(byte[] message) {
         StringBuffer buffer = new StringBuffer();
         for (byte b : message) {
-            buffer.append(pad(Integer.toHexString(b & 0x000000ff)));
+            buffer.append(toHexString(b));
             buffer.append(" ");
         }
         return buffer.toString();
     }
 
+    public static String toHexString(byte b) {
+        return pad(Integer.toHexString(b & 0x000000ff));
+    }
+
+    public static String toHexString(short s) {
+        return pad(Integer.toHexString(s & 0x0000ffff),4);
+    }
+
     public static String pad(String s) {
+        return pad(s,2);
+    }
+    public static String pad(String s, int length) {
+        return pad(s, '0', length);
+    }
+    public static String pad(String s, char c, int length) {
         if (s==null || s.length()==0) {
             return "00";
-        } else if (s.length()==1) {
-            return "0"+s;
+        } else if (s.length()<length) {
+            char[] carr = new char[length-s.length()];
+            Arrays.fill(carr, c);
+            return new String(carr)+s;
         }
         return s;
     }

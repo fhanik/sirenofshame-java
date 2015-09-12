@@ -25,6 +25,16 @@ public class SirenControlPacket {
     private byte manualLeds3 = FF;
     private byte manualLeds4 = FF;
 
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public SirenControlPacket(byte reportId,
                               byte controlByte1,
                               byte audioMode,
@@ -203,7 +213,7 @@ public class SirenControlPacket {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("SirenControlPacket{");
+        final StringBuffer sb = new StringBuffer("SirenControlPacket{name:").append(getName());
         sb.append("\n\treportId         =").append(toHexString(getReportId()));
         sb.append("\n\tcontrolByte1     =").append(toHexString(getControlByte1()));
         sb.append("\n\taudioMode        =").append(toHexString(getAudioMode()));

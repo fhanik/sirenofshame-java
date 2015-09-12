@@ -11,6 +11,7 @@ import javax.usb.UsbConst;
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 import javax.usb.UsbDeviceDescriptor;
+import javax.usb.UsbDisconnectedException;
 import javax.usb.UsbEndpoint;
 import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
@@ -20,7 +21,18 @@ import java.util.List;
 
 public class JavaxSiren {
 
-    public static UsbDevice findSiren(UsbHub hub, int vendorId, int productId) {
+    public static final short VENDOR_ID = 0x16d0;
+    public static final short PRODUCT_ID = 0x0646;
+
+
+    public static UsbDevice findSiren(UsbHub hub) throws UsbException {
+        UsbDevice siren = findSiren(hub, VENDOR_ID, PRODUCT_ID);
+        if (siren==null) {
+            throw new UsbDisconnectedException(String.format("Device not found [vendorId:%s, productId:%s", VENDOR_ID, PRODUCT_ID));
+        }
+        return siren;
+    }
+    protected static UsbDevice findSiren(UsbHub hub, int vendorId, int productId) throws UsbException {
         for (UsbDevice device : (List<UsbDevice>) hub.getAttachedUsbDevices()) {
             if (device.isUsbHub()) {
                 UsbDevice siren = findSiren((UsbHub) device, vendorId, productId);
@@ -36,17 +48,19 @@ public class JavaxSiren {
 
 
     public static void main(final String[] args) throws Exception {
-        short vendorId = 0x16d0;
-        short productId = 0x0646;
         UsbHub hub = UsbHostManager.getUsbServices().getRootUsbHub();
-        UsbDevice siren = findSiren(hub, vendorId, productId);
+        UsbDevice siren = findSiren(hub);
+        claimAndOpenSiren(siren);
+        SirenControlPacket packet = getBlinkingSiren();
+        packet.setAudioMode(SirenConstants.AUDIO_MODE_INTERNAL_START);
+        sendMessage(siren, PacketUtils.getControlMessage(packet));
+        Thread.sleep(5000);
+        packet.setLedMode(SirenConstants.LED_MODE_OFF);
+        packet.setAudioMode(SirenConstants.AUDIO_MODE_OFF);
+        sendMessage(siren, PacketUtils.getControlMessage(packet));
+    }
 
-        if (siren == null) {
-            System.err.println("Missile launcher not found.");
-            System.exit(1);
-            return;
-        }
-
+    public static void claimAndOpenSiren(UsbDevice siren) throws UsbException {
         // Claim the interface
         UsbConfiguration configuration = siren.getUsbConfiguration((byte) 1);
         UsbInterface iface = configuration.getUsbInterface(SirenConstants.INTERFACE_NUMBER);
@@ -58,17 +72,21 @@ public class JavaxSiren {
                 usbEndpoint.getUsbPipe().open();
             }
         }
-
-
-        SirenControlPacket packet = getBlinkingSiren();
-        packet.setAudioMode(SirenConstants.AUDIO_MODE_INTERNAL_START);
-        sendMessage(siren, PacketUtils.getControlMessage(packet));
-        Thread.sleep(5000);
-        packet.setLedMode(SirenConstants.LED_MODE_OFF);
-        packet.setAudioMode(SirenConstants.AUDIO_MODE_OFF);
-        sendMessage(siren, PacketUtils.getControlMessage(packet));
     }
 
+    public static void release(UsbDevice siren) throws UsbException {
+        // Claim the interface
+        UsbConfiguration configuration = siren.getUsbConfiguration((byte) 1);
+        UsbInterface iface = configuration.getUsbInterface(SirenConstants.INTERFACE_NUMBER);
+        //open write pipe
+        for (UsbEndpoint usbEndpoint : (List<UsbEndpoint>) iface.getUsbEndpoints()) {
+            if (usbEndpoint.getUsbPipe().isOpen()) {
+                usbEndpoint.getUsbPipe().close();
+            }
+        }
+        iface.release();
+
+    }
 
     protected static SirenControlPacket getBlinkingSiren() {
         SirenControlPacket packet = new SirenControlPacket();
@@ -86,7 +104,6 @@ public class JavaxSiren {
             (short) 0
         );
         irp.setData(message);
-        System.out.println((PacketUtils.getControlPacket(message).toString()));
         device.syncSubmit(irp);
     }
 

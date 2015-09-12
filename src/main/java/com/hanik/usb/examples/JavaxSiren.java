@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.
+ * Filip Hanik
+ */
+
 package com.hanik.usb.examples;
 
 
@@ -48,7 +53,7 @@ public class JavaxSiren {
         iface.claim(usbInterface -> true);
 
         //open write pipe
-        for (UsbEndpoint usbEndpoint : (List<UsbEndpoint>)iface.getUsbEndpoints()) {
+        for (UsbEndpoint usbEndpoint : (List<UsbEndpoint>) iface.getUsbEndpoints()) {
             if (!usbEndpoint.getUsbPipe().isOpen()) {
                 usbEndpoint.getUsbPipe().open();
             }
@@ -66,7 +71,7 @@ public class JavaxSiren {
 
 
     protected static SirenControlPacket getBlinkingSiren() {
-        SirenControlPacket packet =new SirenControlPacket();
+        SirenControlPacket packet = new SirenControlPacket();
         packet.setReportId(SirenConstants.USB_REPORTID_OUT_CONTROL);
         packet.setLedMode(SirenConstants.LED_MODE_INTERNAL_START);
         packet.setLedPlayDuration(SirenConstants.DURATION_FOREVER);

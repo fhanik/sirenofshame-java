@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.
+ * Filip Hanik
+ */
+
 package com.hanik.usb.examples;
 
 import java.nio.ByteBuffer;
@@ -41,7 +46,7 @@ public class PacketUtils {
         packet.setControlByte1(message[i++]);
         packet.setAudioMode(message[i++]);
         packet.setLedMode(message[i++]);
-        packet.setAudioPlayDuration((short)((message[i++] << 8 | message[i++] & 0xFF) & 0xFFFF));
+        packet.setAudioPlayDuration((short) ((message[i++] << 8 | message[i++] & 0xFF) & 0xFFFF));
         packet.setLedPlayDuration((short)((message[i++] << 8 | message[i++] & 0xFF) & 0xFFFF));
         packet.setReadAudioIndex(message[i++]);
         packet.setReadLedIndex(message[i++]);

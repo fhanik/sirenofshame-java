@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.
+ * Filip Hanik
+ */
+
 package com.hanik.usb.examples;
 
 public class SirenConstants {

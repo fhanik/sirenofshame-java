@@ -17,6 +17,7 @@ import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
 import javax.usb.UsbInterface;
+import javax.usb.UsbPipe;
 import java.util.List;
 
 public class JavaxSiren {
@@ -111,6 +112,20 @@ public class JavaxSiren {
         );
         irp.setData(message);
         device.syncSubmit(irp);
+    }
+
+    public static int readLedPattern(UsbDevice siren, byte[] sendMessage, byte[] readMessage) throws UsbException {
+        sendMessage(siren, sendMessage);
+        UsbControlIrp irp = siren.createUsbControlIrp(
+            (byte) (UsbConst.ENDPOINT_DIRECTION_IN | UsbConst.REQUESTTYPE_TYPE_CLASS | UsbConst.REQUESTTYPE_RECIPIENT_INTERFACE),
+            UsbConst.REQUEST_CLEAR_FEATURE,
+            (short) ((0x01 << 8 ) | 0x04),
+            (short) 0
+        );
+        readMessage[0] = 1;
+        irp.setData(readMessage);
+        siren.syncSubmit(irp);
+        return 0;
     }
 
 }

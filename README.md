@@ -23,3 +23,7 @@ Java Controller for the Siren of Shame - Uses usb4java
 ## How to Windows
 
  1. Run the examples `gradlew -PmainClass=com.hanik.usb.siren.Examples execute`
+
+## Read Led Patterns
+
+ 1.  ./gradlew -PmainClass=com.hanik.usb.siren.examples.ReadLedPatterns execute

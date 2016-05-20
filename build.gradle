@@ -18,6 +18,6 @@ dependencies {
 }
 
 task execute(type:JavaExec) {
-    main = mainClass
+    main = 'com.hanik.usb.siren.Examples'
     classpath = sourceSets.main.runtimeClasspath
 }

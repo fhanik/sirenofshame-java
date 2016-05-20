@@ -5,6 +5,7 @@
 
 package com.hanik.usb.siren.examples;
 
+import com.hanik.usb.siren.AudioPattern;
 import com.hanik.usb.siren.JavaxSiren;
 import com.hanik.usb.siren.PacketUtils;
 import com.hanik.usb.siren.SirenControlPacket;
@@ -36,13 +37,15 @@ public class ReadLedPatterns {
             SirenControlPacket sirenControlPacket = PacketUtils.getControlPacket(packet);
             sirenControlPacket.setName(entry.getKey());
             System.out.println(sirenControlPacket);
-            byte[] readData = new byte[38];
+            byte[] readData = new byte[21];
             JavaxSiren.readLedPattern(siren, PacketUtils.getControlMessage(sirenControlPacket), readData);
-            System.out.println("Read Led Pattern Data\n\t:"+ Arrays.toString(readData));
+            AudioPattern audioPattern = new AudioPattern(readData);
+            System.out.println("Read Led Pattern Data\n\t"+ audioPattern.Id + " - " + audioPattern.Name);
             Thread.sleep(500);
             JavaxSiren.sendMessage(siren, PacketUtils.getControlMessage(stop1));
             JavaxSiren.sendMessage(siren, PacketUtils.getControlMessage(stop2));
         }
         JavaxSiren.release(siren);
     }
+
 }

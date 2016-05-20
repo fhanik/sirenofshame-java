@@ -14,10 +14,8 @@ import javax.usb.UsbDevice;
 import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ReadLedPatterns {
     public static void main(String[] arg) throws UsbException, InterruptedException {
@@ -25,14 +23,31 @@ public class ReadLedPatterns {
         UsbDevice siren = JavaxSiren.findSiren(hub);
         JavaxSiren.claimAndOpenSiren(siren);
 
-        SirenControlPacket sirenControlPacket = new SirenControlPacket();
-        sirenControlPacket.setReadAudioIndex((byte)1);
-        sirenControlPacket.setName("read.led.0");
-        System.out.println(sirenControlPacket);
-        byte[] readData = new byte[21];
-        JavaxSiren.readLedPattern(siren, PacketUtils.getControlMessage(sirenControlPacket), readData);
-        AudioPattern audioPattern = new AudioPattern(readData);
-        System.out.println("Read Led Pattern Data\n\t"+ audioPattern.Id + " - " + audioPattern.Name);
+        List<AudioPattern> audioPatterns = getAudioPatterns(siren);
+        for (AudioPattern audioPattern : audioPatterns) {
+            System.out.println("\t" + audioPattern.Id + " - " + audioPattern.Name);
+        }
         JavaxSiren.release(siren);
+    }
+
+    private static List<AudioPattern> getAudioPatterns(UsbDevice siren) throws UsbException {
+        ArrayList<AudioPattern> audioPatterns = new ArrayList<AudioPattern>();
+        int id = 0;
+        while (true) {
+            AudioPattern audioPattern = getAudioPattern(siren, id);
+            if (audioPattern.Id == -1) break;
+            audioPatterns.add(audioPattern);
+            id++;
+        }
+        return audioPatterns;
+    }
+
+    private static AudioPattern getAudioPattern(UsbDevice siren, int index) throws UsbException {
+        SirenControlPacket sirenControlPacket = new SirenControlPacket();
+        sirenControlPacket.setReadAudioIndex((byte) index);
+        sirenControlPacket.setName("read.led.0");
+        byte[] readData = new byte[21];
+        JavaxSiren.getInputReport(siren, PacketUtils.getControlMessage(sirenControlPacket), readData, (byte)0x03);
+        return new AudioPattern(readData);
     }
 }

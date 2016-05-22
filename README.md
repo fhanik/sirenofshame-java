@@ -31,3 +31,9 @@ Java Controller for the Siren of Shame - Uses usb4java
 ## Read Audio Patterns
 
  1.  ./gradlew execute -Pargs="-a"
+
+## Manually set led patterns
+
+ 1. Pass -m and 5 bytes (0-255) for each led bar, e.g. 128 0 255 0 0 sets the first bar to 50%, the 3rd bar to 100% and
+   everything else to off.
+ 2. ./gradlew execute -Pargs="-m 128 0 255 0 0"

@@ -11,13 +11,14 @@ public class SirenOfShameDevice {
     public static final byte REPORTID_IN_INFO = (byte) 0x01;
     public static final byte REPORTID_IN_READAUDIOPACKET = (byte) 0x03;
     public static final byte REPORTID_IN_READLEDPACKET = (byte) 0x04;
+    private static final byte LED_MODE_MANUAL = (byte) 0x01;
 
     UsbDevice _siren;
 
     public boolean tryConnect() {
         try {
             UsbHub hub = UsbHostManager.getUsbServices().getRootUsbHub();
-            _siren = JavaxSiren.findSiren(hub);
+            _siren = JavaxSiren.findSirenOrDefault(hub);
             if (_siren == null) return false;
             JavaxSiren.claimAndOpenSiren(_siren);
             return true;
@@ -75,5 +76,16 @@ public class SirenOfShameDevice {
         byte[] readData = new byte[21];
         JavaxSiren.getInputReport(siren, PacketUtils.getControlMessage(sirenControlPacket), readData, REPORTID_IN_READAUDIOPACKET);
         return new AudioPattern(readData);
+    }
+
+    public void manualControl(ManualControlData manualControlData) throws UsbException {
+        SirenControlPacket sirenControlPacket = new SirenControlPacket();
+        sirenControlPacket.setLedMode(LED_MODE_MANUAL);
+        sirenControlPacket.setManualLeds0(manualControlData.Led0);
+        sirenControlPacket.setManualLeds1(manualControlData.Led1);
+        sirenControlPacket.setManualLeds2(manualControlData.Led2);
+        sirenControlPacket.setManualLeds3(manualControlData.Led3);
+        sirenControlPacket.setManualLeds4(manualControlData.Led4);
+        JavaxSiren.sendMessage(_siren, PacketUtils.getControlMessage(sirenControlPacket));
     }
 }

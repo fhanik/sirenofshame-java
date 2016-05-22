@@ -76,6 +76,12 @@ public class Program {
             Duration duration = Duration.ofSeconds(durationInSeconds);
             sirenOfShameDevice.playAudioPattern(audioPattern, duration);
         }
+        if (arg1.startsWith("-sa")) {
+            sirenOfShameDevice.stopAudioPattern();
+        }
+        if (arg1.startsWith("-sl")) {
+            sirenOfShameDevice.stopLightPattern();
+        }
         sirenOfShameDevice.disconnect();
     }
 

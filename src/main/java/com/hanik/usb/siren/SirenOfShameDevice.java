@@ -93,19 +93,41 @@ public class SirenOfShameDevice {
 
     public void playLightPattern(LedPattern ledPattern, Duration duration) throws UsbException {
         SirenControlPacket sirenControlPacket = new SirenControlPacket();
-        sirenControlPacket.setLedMode((byte)ledPattern.Id);
-        short durationBytes = calculateDurationFromDuration(duration);
-        sirenControlPacket.setLedPlayDuration(durationBytes);
+        if (ledPattern == null) {
+            sirenControlPacket.setLedMode((byte)0x00);
+            sirenControlPacket.setLedPlayDuration((short)0x0000);
+        } else {
+            sirenControlPacket.setLedMode((byte) ledPattern.Id);
+            short durationBytes = calculateDurationFromDuration(duration);
+            sirenControlPacket.setLedPlayDuration(durationBytes);
+        }
         JavaxSiren.sendMessage(_siren, PacketUtils.getControlMessage(sirenControlPacket));
     }
 
     public void playAudioPattern(AudioPattern audioPattern, Duration duration) throws UsbException {
         SirenControlPacket sirenControlPacket = new SirenControlPacket();
-        sirenControlPacket.setAudioMode((byte)audioPattern.Id);
-        short durationBytes = calculateDurationFromDuration(duration);
-        sirenControlPacket.setAudioPlayDuration(durationBytes);
+        if (audioPattern == null) {
+            sirenControlPacket.setAudioMode((byte)0x00);
+            sirenControlPacket.setAudioPlayDuration((short)0x0000);
+        } else {
+            sirenControlPacket.setAudioMode((byte) audioPattern.Id);
+            short durationBytes = calculateDurationFromDuration(duration);
+            sirenControlPacket.setAudioPlayDuration(durationBytes);
+        }
         JavaxSiren.sendMessage(_siren, PacketUtils.getControlMessage(sirenControlPacket));
     }
+
+    public void stopAudioPattern() throws UsbException {
+        playAudioPattern(null, null);
+    }
+
+    public void stopLightPattern() throws UsbException {
+        playLightPattern(null, null);
+    }
+
+//    private SirenOfShameInfo readDeviceInfo() {
+//
+//    }
 
     private short calculateDurationFromDuration(Duration duration) {
         if (duration == null) {

@@ -99,6 +99,14 @@ public class SirenOfShameDevice {
         JavaxSiren.sendMessage(_siren, PacketUtils.getControlMessage(sirenControlPacket));
     }
 
+    public void playAudioPattern(AudioPattern audioPattern, Duration duration) throws UsbException {
+        SirenControlPacket sirenControlPacket = new SirenControlPacket();
+        sirenControlPacket.setAudioMode((byte)audioPattern.Id);
+        short durationBytes = calculateDurationFromDuration(duration);
+        sirenControlPacket.setAudioPlayDuration(durationBytes);
+        JavaxSiren.sendMessage(_siren, PacketUtils.getControlMessage(sirenControlPacket));
+    }
+
     private short calculateDurationFromDuration(Duration duration) {
         if (duration == null) {
             return DURATION_FOREVER;

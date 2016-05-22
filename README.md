@@ -44,3 +44,9 @@ Java Controller for the Siren of Shame - Uses usb4java
  1. Pass -l and the pattern id (see Read Led Patterns) and the duration in seconds
  2. For example the following plays Led pattern #2 (On/Off in Firmware 2.1) for 5 seconds
  3. ./gradlew execute -Pargs="l 2 5" <- plays
+
+ ## Play audio patterns
+
+  1. Pass -a and the pattern id (see Read Audio Patterns) and the duration in seconds
+  2. For example the following plays Audio pattern #1 (Sad Trombone in Firmware 2.1) for 5 seconds
+  3. ./gradlew execute -Pargs="a 1 5" <- plays

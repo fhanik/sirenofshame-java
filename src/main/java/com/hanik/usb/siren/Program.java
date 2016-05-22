@@ -64,6 +64,18 @@ public class Program {
             Duration duration = Duration.ofSeconds(durationInSeconds);
             sirenOfShameDevice.playLightPattern(ledPattern, duration);
         }
+        if (arg1.startsWith("-a")) {
+            String errorMessage = "Please specify a pattern id (0-255) and duration in seconds (0 = off, 999 = forever)";
+            if (args.length < 3) {
+                System.out.println(errorMessage);
+                return;
+            }
+            AudioPattern audioPattern = new AudioPattern();
+            audioPattern.Id = parseByte(args, 1);
+            int durationInSeconds = Integer.parseInt(args[2]);
+            Duration duration = Duration.ofSeconds(durationInSeconds);
+            sirenOfShameDevice.playAudioPattern(audioPattern, duration);
+        }
         sirenOfShameDevice.disconnect();
     }
 

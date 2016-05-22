@@ -4,6 +4,10 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class AudioPattern {
+    public AudioPattern() {
+
+    }
+
     public AudioPattern(byte[] pattern) {
         Id = pattern[0];
         byte[] newArray = Arrays.copyOfRange(pattern, 1, pattern.length);

@@ -26,6 +26,9 @@ public class JavaxSiren {
     public static final short PRODUCT_ID = 0x0646;
 
 
+    public static UsbDevice findSirenOrDefault(UsbHub hub) throws UsbException {
+        return findSiren(hub, VENDOR_ID, PRODUCT_ID);
+    }
     public static UsbDevice findSiren(UsbHub hub) throws UsbException {
         UsbDevice siren = findSiren(hub, VENDOR_ID, PRODUCT_ID);
         if (siren==null) {

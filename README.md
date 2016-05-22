@@ -18,12 +18,16 @@ Java Controller for the Siren of Shame - Uses usb4java
  
 ## How to Mac OS
 
- 1. Run the examples `./gradlew -PmainClass=com.hanik.usb.siren.Examples execute`
+ 1. Try to read audio samples the examples `./gradlew execute -Pargs="-l"`
 
 ## How to Windows
 
- 1. Run the examples `gradlew -PmainClass=com.hanik.usb.siren.Examples execute`
+ 1. Try to read audio samples `gradlew execute -Pargs="-l"`
 
 ## Read Led Patterns
 
- 1.  ./gradlew -PmainClass=com.hanik.usb.siren.examples.ReadLedPatterns execute
+ 1.  ./gradlew execute -Pargs="-l"
+
+## Read Audio Patterns
+
+ 1.  ./gradlew execute -Pargs="-a"

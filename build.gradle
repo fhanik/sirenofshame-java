@@ -18,6 +18,9 @@ dependencies {
 }
 
 task execute(type:JavaExec) {
-    main = 'com.hanik.usb.siren.Examples'
+    if (project.hasProperty('args')) {
+        args project.args.split('\\s')
+    }
+    main = 'com.hanik.usb.siren.Program'
     classpath = sourceSets.main.runtimeClasspath
 }

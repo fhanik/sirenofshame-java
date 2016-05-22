@@ -19,10 +19,10 @@ public class PacketUtils {
         message[i++] = packet.getControlByte1();
         message[i++] = packet.getAudioMode();
         message[i++] = packet.getLedMode();
-        message[i++] = (byte)((packet.getAudioPlayDuration()>> 8) & 0xff);
         message[i++] = (byte)(packet.getAudioPlayDuration() & 0xff);
-        message[i++] = (byte)((packet.getLedPlayDuration() >> 8) & 0xff);
+        message[i++] = (byte)((packet.getAudioPlayDuration()>> 8) & 0xff);
         message[i++] = (byte)(packet.getLedPlayDuration() & 0xff);
+        message[i++] = (byte)((packet.getLedPlayDuration() >> 8) & 0xff);
         message[i++] = packet.getReadAudioIndex();
         message[i++] = packet.getReadLedIndex();
         message[i++] = packet.getManualLeds0();

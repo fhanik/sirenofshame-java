@@ -4,6 +4,7 @@ import javax.usb.UsbDevice;
 import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class SirenOfShameDevice {
     public static final byte REPORTID_IN_READAUDIOPACKET = (byte) 0x03;
     public static final byte REPORTID_IN_READLEDPACKET = (byte) 0x04;
     private static final byte LED_MODE_MANUAL = (byte) 0x01;
+    private static final short DURATION_FOREVER = (short)0xfffe;
 
     UsbDevice _siren;
 
@@ -87,5 +89,25 @@ public class SirenOfShameDevice {
         sirenControlPacket.setManualLeds3(manualControlData.Led3);
         sirenControlPacket.setManualLeds4(manualControlData.Led4);
         JavaxSiren.sendMessage(_siren, PacketUtils.getControlMessage(sirenControlPacket));
+    }
+
+    public void playLightPattern(LedPattern ledPattern, Duration duration) throws UsbException {
+        SirenControlPacket sirenControlPacket = new SirenControlPacket();
+        sirenControlPacket.setLedMode((byte)ledPattern.Id);
+        short durationBytes = calculateDurationFromDuration(duration);
+        sirenControlPacket.setLedPlayDuration(durationBytes);
+        JavaxSiren.sendMessage(_siren, PacketUtils.getControlMessage(sirenControlPacket));
+    }
+
+    private short calculateDurationFromDuration(Duration duration) {
+        if (duration == null) {
+            return DURATION_FOREVER;
+        }
+        long result = (duration.getSeconds() * 10);
+        if (result > (Short.MAX_VALUE - 10)) {
+            return DURATION_FOREVER;
+        }
+        long unsignedShort = result - 65536;
+        return (short)unsignedShort;
     }
 }

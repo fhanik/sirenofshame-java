@@ -6,6 +6,7 @@
 package com.hanik.usb.siren;
 
 import javax.usb.UsbException;
+import java.time.Duration;
 import java.util.List;
 
 public class Program {
@@ -24,14 +25,14 @@ public class Program {
             System.out.println("No siren of shame device found");
             return;
         }
-        if (arg1.startsWith("-a")) {
+        if (arg1.startsWith("-ra")) {
             System.out.println("Audio Patterns:");
             List<AudioPattern> audioPatterns = sirenOfShameDevice.getAudioPatterns();
             for (AudioPattern audioPattern : audioPatterns) {
                 System.out.println("\t" + audioPattern.Id + " - " + audioPattern.Name);
             }
         }
-        if (arg1.startsWith("-l")) {
+        if (arg1.startsWith("-rl")) {
             System.out.println("LED Patterns:");
             List<LedPattern> ledPatterns = sirenOfShameDevice.getLedPatterns();
             for (LedPattern ledPattern : ledPatterns) {
@@ -50,6 +51,18 @@ public class Program {
                 return;
             }
             sirenOfShameDevice.manualControl(manualControlData);
+        }
+        if (arg1.startsWith("-l")) {
+            String errorMessage = "Please specify a pattern id (0-255) and duration in seconds (0 = off, 999 = forever)";
+            if (args.length < 3) {
+                System.out.println(errorMessage);
+                return;
+            }
+            LedPattern ledPattern = new LedPattern();
+            ledPattern.Id = parseByte(args, 1);
+            int durationInSeconds = Integer.parseInt(args[2]);
+            Duration duration = Duration.ofSeconds(durationInSeconds);
+            sirenOfShameDevice.playLightPattern(ledPattern, duration);
         }
         sirenOfShameDevice.disconnect();
     }

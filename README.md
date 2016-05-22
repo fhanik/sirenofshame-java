@@ -18,22 +18,29 @@ Java Controller for the Siren of Shame - Uses usb4java
  
 ## How to Mac OS
 
- 1. Try to read audio samples the examples `./gradlew execute -Pargs="-l"`
+ 1. Try to read audio samples the examples `./gradlew execute -Pargs="-rl"`
 
 ## How to Windows
 
- 1. Try to read audio samples `gradlew execute -Pargs="-l"`
+ 1. Reading HID doesn't seem to work in Windows, but try setting the LED's with
+ 1. `gradlew execute -Pargs="-m 128 0 255 0 0"`
 
 ## Read Led Patterns
 
- 1.  ./gradlew execute -Pargs="-l"
+ 1.  ./gradlew execute -Pargs="-rl"
 
 ## Read Audio Patterns
 
- 1.  ./gradlew execute -Pargs="-a"
+ 1.  ./gradlew execute -Pargs="-ra"
 
-## Manually set led patterns
+## Manually set LED's
 
- 1. Pass -m and 5 bytes (0-255) for each led bar, e.g. 128 0 255 0 0 sets the first bar to 50%, the 3rd bar to 100% and
-   everything else to off.
+ 1. Pass -m and 5 bytes (0-255), one for each led bar
+ 2. For example the following sets the first bar to 50%, the 3rd bar to 100% and turns off everything else
  2. ./gradlew execute -Pargs="-m 128 0 255 0 0"
+
+## Play led patterns
+
+ 1. Pass -l and the pattern id (see Read Led Patterns) and the duration in seconds
+ 2. For example the following plays Led pattern #2 (On/Off in Firmware 2.1) for 5 seconds
+ 3. ./gradlew execute -Pargs="l 2 5" <- plays

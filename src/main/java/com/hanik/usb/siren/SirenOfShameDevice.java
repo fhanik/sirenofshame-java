@@ -14,6 +14,7 @@ public class SirenOfShameDevice {
     public static final byte REPORTID_IN_READLEDPACKET = (byte) 0x04;
     private static final byte LED_MODE_MANUAL = (byte) 0x01;
     private static final short DURATION_FOREVER = (short)0xfffe;
+    private static final int PACKET_SIZE = 1 + 37; // report id + packet length
 
     UsbDevice _siren;
 
@@ -66,8 +67,9 @@ public class SirenOfShameDevice {
         SirenControlPacket sirenControlPacket = new SirenControlPacket();
         sirenControlPacket.setReadLedIndex((byte) index);
         sirenControlPacket.setName("read.led.0");
-        byte[] readData = new byte[21];
-        JavaxSiren.getInputReport(siren, PacketUtils.getControlMessage(sirenControlPacket), readData, REPORTID_IN_READLEDPACKET);
+        byte[] readData = new byte[PACKET_SIZE];
+        JavaxSiren.sendMessage(siren, PacketUtils.getControlMessage(sirenControlPacket));
+        JavaxSiren.getInputReport(siren, readData, REPORTID_IN_READLEDPACKET);
         return new LedPattern(readData);
     }
 
@@ -75,9 +77,17 @@ public class SirenOfShameDevice {
         SirenControlPacket sirenControlPacket = new SirenControlPacket();
         sirenControlPacket.setReadAudioIndex((byte) index);
         sirenControlPacket.setName("read.led.0");
-        byte[] readData = new byte[21];
-        JavaxSiren.getInputReport(siren, PacketUtils.getControlMessage(sirenControlPacket), readData, REPORTID_IN_READAUDIOPACKET);
+        byte[] readData = new byte[PACKET_SIZE];
+        JavaxSiren.sendMessage(siren, PacketUtils.getControlMessage(sirenControlPacket));
+        JavaxSiren.getInputReport(siren, readData, REPORTID_IN_READAUDIOPACKET);
         return new AudioPattern(readData);
+    }
+
+    public SirenOfShameInfo readDeviceInfo() throws UsbException {
+        byte[] readData = new byte[PACKET_SIZE];
+        JavaxSiren.getInputReport(_siren, readData, REPORTID_IN_INFO);
+        SirenOfShameInfo sirenOfShameInfo = new SirenOfShameInfo(readData);
+        return sirenOfShameInfo;
     }
 
     public void manualControl(ManualControlData manualControlData) throws UsbException {
@@ -124,10 +134,6 @@ public class SirenOfShameDevice {
     public void stopLightPattern() throws UsbException {
         playLightPattern(null, null);
     }
-
-//    private SirenOfShameInfo readDeviceInfo() {
-//
-//    }
 
     private short calculateDurationFromDuration(Duration duration) {
         if (duration == null) {

@@ -118,8 +118,7 @@ public class JavaxSiren {
         device.syncSubmit(irp);
     }
 
-    public static int getInputReport(UsbDevice siren, byte[] sendMessage, byte[] readMessage, byte controlByte) throws UsbException {
-        sendMessage(siren, sendMessage);
+    public static int getInputReport(UsbDevice siren, byte[] readMessage, byte controlByte) throws UsbException {
         UsbControlIrp irp = siren.createUsbControlIrp(
             (byte) (UsbConst.ENDPOINT_DIRECTION_IN | UsbConst.REQUESTTYPE_TYPE_CLASS | UsbConst.REQUESTTYPE_RECIPIENT_INTERFACE),
             UsbConst.REQUEST_CLEAR_FEATURE,

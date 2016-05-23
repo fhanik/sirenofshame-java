@@ -12,9 +12,15 @@ import java.util.List;
 public class Program {
     public static void main(String[] args) throws UsbException, InterruptedException {
         if (args.length == 0) {
-            System.out.println("usage: soscmd [-al]");
-            System.out.println("\t-a\tlist audio patterns");
-            System.out.println("\t-l\tlist led patterns");
+            System.out.println("usage: soscmd -[i|ra|rl|m|l|a|sa|sl]");
+            System.out.println("\t-i  Retrieve info about device");
+            System.out.println("\t-ra List audio patterns");
+            System.out.println("\t-rl List led patterns");
+            System.out.println("\t-m  Manually set LED's");
+            System.out.println("\t-l  Play an LED pattern");
+            System.out.println("\t-a  Play an audio pattern");
+            System.out.println("\t-sa Stop audio");
+            System.out.println("\t-sl Stop LED's");
             return;
         }
 
@@ -81,6 +87,10 @@ public class Program {
         }
         if (arg1.startsWith("-sl")) {
             sirenOfShameDevice.stopLightPattern();
+        }
+        if (arg1.startsWith("-i")) {
+            SirenOfShameInfo sirenOfShameInfo = sirenOfShameDevice.readDeviceInfo();
+            System.out.println(sirenOfShameInfo);
         }
         sirenOfShameDevice.disconnect();
     }

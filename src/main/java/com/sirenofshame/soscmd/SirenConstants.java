@@ -3,7 +3,7 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
 public class SirenConstants {
     public static final byte USB_REPORTID_OUT_CONTROL = 1;

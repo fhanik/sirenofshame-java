@@ -3,13 +3,10 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
 import java.util.Arrays;
 
-/**
- * Created by fhanik on 9/11/15.
- */
 public class PacketUtils {
 
     public static byte[] getControlMessage(SirenControlPacket packet) {

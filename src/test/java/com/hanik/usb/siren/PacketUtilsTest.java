@@ -3,14 +3,11 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by fhanik on 9/11/15.
- */
 public class PacketUtilsTest {
 
 

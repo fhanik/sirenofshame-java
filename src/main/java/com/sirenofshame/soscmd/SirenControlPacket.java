@@ -3,9 +3,9 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
-import static com.hanik.usb.siren.PacketUtils.toHexString;
+import static com.sirenofshame.soscmd.PacketUtils.toHexString;
 
 public class SirenControlPacket {
     public static final byte  FF = (byte) 0xff;

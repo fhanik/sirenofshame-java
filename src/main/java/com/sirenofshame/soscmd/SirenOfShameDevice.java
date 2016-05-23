@@ -1,4 +1,4 @@
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
 import javax.usb.UsbDevice;
 import javax.usb.UsbException;

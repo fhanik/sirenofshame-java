@@ -1,4 +1,4 @@
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
 import java.time.Duration;
 

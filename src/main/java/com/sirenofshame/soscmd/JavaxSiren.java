@@ -3,7 +3,7 @@
  * Filip Hanik
  */
 
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
 
 import javax.usb.UsbConfiguration;

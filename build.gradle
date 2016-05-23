@@ -21,6 +21,6 @@ task execute(type:JavaExec) {
     if (project.hasProperty('args')) {
         args project.args.split('\\s')
     }
-    main = 'com.hanik.usb.siren.Program'
+    main = 'com.sirenofshame.soscmd.Program'
     classpath = sourceSets.main.runtimeClasspath
 }

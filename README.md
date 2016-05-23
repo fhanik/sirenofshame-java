@@ -9,7 +9,7 @@ Java Controller for the Siren of Shame - Uses usb4java
 
  1. Try to read info from device `./gradlew execute -Pargs="-i"` if you get an Access Denied then
  2. Open the file [99-sirenusb.rules](src/main/resources/99-sirenusb.rules)
- 3. Put in your user group instead of fhanik
+ 3. Put in your user group instead of sirenofshame
  4. Copy the file to /etc/udev/rules.d/
  5. Unplug the Siren
  6. Run the command `udevadm trigger`

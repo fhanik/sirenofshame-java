@@ -1,4 +1,4 @@
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
 public class ManualControlData {
     public byte Led0;

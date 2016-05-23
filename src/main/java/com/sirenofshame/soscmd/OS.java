@@ -1,4 +1,4 @@
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
 public class OS {
     public static void main (String[] args) {

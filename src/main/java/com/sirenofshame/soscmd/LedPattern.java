@@ -1,14 +1,13 @@
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class AudioPattern {
-    public AudioPattern() {
+public class LedPattern {
+    public LedPattern() {
 
     }
 
-    public AudioPattern(byte[] pattern) {
+    public LedPattern(byte[] pattern) {
         Id = pattern[0];
         byte[] newArray = Arrays.copyOfRange(pattern, 1, pattern.length);
         Name = new String(newArray).trim();

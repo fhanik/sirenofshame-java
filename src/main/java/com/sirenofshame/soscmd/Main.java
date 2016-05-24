@@ -1,15 +1,10 @@
-/*
- * Copyright (c) 2015.
- * Filip Hanik
- */
-
 package com.sirenofshame.soscmd;
 
 import javax.usb.UsbException;
 import java.time.Duration;
 import java.util.List;
 
-public class Program {
+public class Main {
     public static void main(String[] args) throws UsbException, InterruptedException {
         if (args.length == 0) {
             System.out.println("usage: soscmd -[i|ra|rl|m|l|a|sa|sl]");

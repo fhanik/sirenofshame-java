@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2015.
- * Filip Hanik
- */
-
 package com.sirenofshame.soscmd;
 
 

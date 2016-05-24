@@ -1,7 +1,10 @@
-group 'com.hanik.usb'
-version '1.0-SNAPSHOT'
+group 'com.sirenofshame.soscmd'
+version '1.0'
 
 apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "com.sirenofshame.soscmd.Main"
 
 sourceCompatibility = 1.8
 
@@ -17,10 +20,21 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-task execute(type:JavaExec) {
+jar {
+    baseName = "soscmd"
+    version = "$version"
+    manifest {
+        attributes 'Implementation-Title': 'Siren of Shame Command',
+                'Implementation-Version': version,
+                'Main-Class': "$mainClassName"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+run {
     if (project.hasProperty('args')) {
         args project.args.split('\\s')
     }
-    main = 'com.sirenofshame.soscmd.Program'
-    classpath = sourceSets.main.runtimeClasspath
 }

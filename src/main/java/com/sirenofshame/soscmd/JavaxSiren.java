@@ -1,9 +1,4 @@
-/*
- * Copyright (c) 2015.
- * Filip Hanik
- */
-
-package com.hanik.usb.siren;
+package com.sirenofshame.soscmd;
 
 
 import javax.usb.UsbConfiguration;
@@ -25,6 +20,9 @@ public class JavaxSiren {
     public static final short VENDOR_ID = 0x16d0;
     public static final short PRODUCT_ID = 0x0646;
 
+    public static UsbDevice findSirenOrDefault(UsbHub hub) throws UsbException {
+        return findSiren(hub, VENDOR_ID, PRODUCT_ID);
+    }
 
     public static UsbDevice findSiren(UsbHub hub) throws UsbException {
         UsbDevice siren = findSiren(hub, VENDOR_ID, PRODUCT_ID);
@@ -33,6 +31,7 @@ public class JavaxSiren {
         }
         return siren;
     }
+
     protected static UsbDevice findSiren(UsbHub hub, int vendorId, int productId) throws UsbException {
         for (UsbDevice device : (List<UsbDevice>) hub.getAttachedUsbDevices()) {
             if (device.isUsbHub()) {
@@ -114,12 +113,11 @@ public class JavaxSiren {
         device.syncSubmit(irp);
     }
 
-    public static int readLedPattern(UsbDevice siren, byte[] sendMessage, byte[] readMessage) throws UsbException {
-        sendMessage(siren, sendMessage);
+    public static int getInputReport(UsbDevice siren, byte[] readMessage, byte controlByte) throws UsbException {
         UsbControlIrp irp = siren.createUsbControlIrp(
             (byte) (UsbConst.ENDPOINT_DIRECTION_IN | UsbConst.REQUESTTYPE_TYPE_CLASS | UsbConst.REQUESTTYPE_RECIPIENT_INTERFACE),
             UsbConst.REQUEST_CLEAR_FEATURE,
-            (short) ((0x01 << 8 ) | 0x04),
+            (short) ((0x01 << 8 ) | controlByte),
             (short) 0
         );
         readMessage[0] = 1;

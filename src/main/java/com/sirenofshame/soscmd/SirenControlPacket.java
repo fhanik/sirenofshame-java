@@ -1,17 +1,12 @@
-/*
- * Copyright (c) 2015.
- * Filip Hanik
- */
+package com.sirenofshame.soscmd;
 
-package com.hanik.usb.siren;
-
-import static com.hanik.usb.siren.PacketUtils.toHexString;
+import static com.sirenofshame.soscmd.PacketUtils.toHexString;
 
 public class SirenControlPacket {
     public static final byte  FF = (byte) 0xff;
     public static final short FFFF = (short) 0xffff;
 
-    private byte reportId = 0;
+    private byte reportId = 1;
     private byte controlByte1 = FF;
     private byte audioMode = FF;
     private byte ledMode = FF;
